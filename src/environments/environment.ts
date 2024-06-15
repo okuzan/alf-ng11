@@ -6,7 +6,7 @@ import {AppConstants} from '../app/common/app.constants';
 
 export const environment = {
   production: false,
-  apiUrl: AppConstants.API_URL
+  apiUrl: 'http://localhost:9998'
 };
 
 /*
