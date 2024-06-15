@@ -73,6 +73,9 @@
           "configurations": {
             "production": {
               "browserTarget": "almonium-fe:build:production"
+            },
+            "development": {
+              "browserTarget": "almonium-fe:build"
             }
           }
         },

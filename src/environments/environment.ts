@@ -6,7 +6,8 @@ import {AppConstants} from '../app/common/app.constants';
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:9998'
+  apiUrl: 'http://localhost:9998',
+  feUrl: 'http://localhost:9999'
 };
 
 /*
