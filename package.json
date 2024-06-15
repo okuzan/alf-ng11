@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --configuration development",
+    "build": "ng build --configuration production",
+    "start:prod": "ng serve --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -24,6 +25,7 @@
     "@angular/router": "~11.0.2",
     "angular-ng-autocomplete": "^2.0.8",
     "angular2-flash-messages": "^3.0.1",
+    "dotenv": "^16.4.5",
     "flash-messages-angular": "^4.0.1",
     "fs": "0.0.1-security",
     "fs-extra": "^10.1.0",
