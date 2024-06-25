@@ -60,31 +60,11 @@
   line-height: 1.2;
   font-size: 20px;
   color: #313131;
-  /*font-family: fantasy;*/
 }
 
 .icon-display {
   transform: scale(2);
 }
-
-.form-input-autocomplete {
-  /*margin: auto;*/
-  /*width: 50%;*/
-  /*border: 3px solid green;*/
-  /*padding: 10px;*/
-}
-
-.input-autocomplete {
-  /*border: 3px solid green;*/
-  /*size: 10em;*/
-  /*width: 500px;*/
-  /*margin-bottom: -22px;*/
-  /*border-bottom: 1px solid black;*/
-}
-
-/*.mat-form-field {*/
-/*  width: 800px;*/
-/*}*/
 
 #audio.active {
   display: block !important;
@@ -96,10 +76,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-}
-
-.expansion-panel-content {
-  /*width: 3em;*/
 }
 
 .panel-header {
@@ -125,11 +101,6 @@
   flex-direction: row;
 }
 
-/*::ng-deep.mat-expansion-panel-header-description,*/
-/*::ng-deep.mat-expansion-indicator::after {*/
-/*  color: #000000;*/
-/*}*/
-
 .random-btn {
   margin-right: 30px;
   margin-top: 70px;
@@ -153,8 +124,6 @@
 mat-form-field.mat-form-field {
   font-size: 50px;
   text-align: center;
-  /*outline: none;*/
-
 }
 
 .small-icon {
@@ -168,7 +137,6 @@ mat-form-field.mat-form-field {
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
-  /*change color of label*/
   color: green !important;
 }
 
@@ -194,6 +162,7 @@ mat-form-field.mat-form-field {
 .mat-content > mat-panel-description {
   flex: 0 0 auto;
 }
+
 .frequency-box {
   border: 2px solid black;
   padding: 5px;

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from '../models/user.model';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -29,16 +29,16 @@ export class TokenStorageService {
   }
 
   public saveUser(user: User): void {
-    console.log("SAVED USER ")
-    console.log(user)
+    console.log('SAVED USER ');
+    console.log(user);
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
     this.saveCurLang(user.targetLangs[0]);
   }
 
   public saveCurLang(lang: string) {
-    console.log("SAVED lang");
-    console.log(lang)
+    console.log('SAVED lang');
+    console.log(lang);
     window.sessionStorage.removeItem(CUR_LANG_KEY);
     window.sessionStorage.setItem(CUR_LANG_KEY, (lang));
 
@@ -58,9 +58,10 @@ export class TokenStorageService {
     if (!!user) {
       back = user.background;
     }
-    if (this.router.url === '/profile')
+    if (this.router.url === '/profile') {
       return '';
-    else
+    } else {
       return `url('../assets/img/background/${back}.svg')`;
+    }
   }
 }

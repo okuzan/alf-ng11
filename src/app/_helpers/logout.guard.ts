@@ -11,8 +11,8 @@ export class LogoutGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
-      localStorage.clear();
-      sessionStorage.clear();
-      return this.router.parseUrl('/login');
+    localStorage.clear();
+    sessionStorage.clear();
+    return this.router.parseUrl('/login');
   }
 }

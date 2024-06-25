@@ -1,13 +1,13 @@
-<div class="login-page" *ngIf="!isLoggedIn">
+<div *ngIf="!isLoggedIn" class="login-page">
   <mat-card class="mat-elevation-z12">
     <mat-card-title style="text-align:center;">Get in!</mat-card-title>
-    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
+    <mat-tab-group class="example-stretched-tabs" mat-stretch-tabs>
       <mat-tab label="Sign in">
         <mat-card-content>
-          <form name="loginForm" (ngSubmit)="inF.form.valid && onLoginSubmit()" #inF="ngForm">
-            <mat-error class="registration-result"
-                       *ngIf="inF.submitted && isLoginFailed">
-              {{errorMessage}}
+          <form #inF="ngForm" (ngSubmit)="inF.form.valid && onLoginSubmit()" name="loginForm">
+            <mat-error *ngIf="inF.submitted && isLoginFailed"
+                       class="registration-result">
+              {{ errorMessage }}
             </mat-error>
             <mat-form-field hideRequiredMarker>
               <input
@@ -22,20 +22,20 @@
               <mat-error *ngIf="email.invalid">Email is required</mat-error>
               <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
-            <mat-form-field hideRequiredMarker (capsLock)="capsOn=$event">
+            <mat-form-field (capsLock)="capsOn=$event" hideRequiredMarker>
               <input
-                matInput
-                placeholder="Password"
-                type="password"
-                required
-                minlength="8"
-                name="password"
+                #password="ngModel"
                 [(ngModel)]="loginForm.password"
-                ngModel
+                [matTooltipDisabled]="!capsOn"
+                matInput
                 matTooltip="Caps Lock"
                 matTooltipPosition="left"
-                [matTooltipDisabled]="!capsOn"
-                #password="ngModel">
+                minlength="8"
+                name="password"
+                ngModel
+                placeholder="Password"
+                required
+                type="password">
               <mat-error
                 *ngIf="password.errors && password.errors.required">
                 Password is required
@@ -51,46 +51,46 @@
               <a href="/home"> Forgot password?</a>
             </div>
             <button
-              mat-raised-button
-              color="accent"
               [disabled]="!inF.form.valid"
-              class="login-button">
+              class="login-button"
+              color="accent"
+              mat-raised-button>
               Sign in
             </button>
             <button
-              type="button"
+              (click)="navigateToProvider(googleURL)"
+              class="provider-btn"
               color="primary"
               mat-raised-button
-              class="provider-btn"
-              (click)="navigateToProvider(googleURL)">
+              type="button">
               <div class="provider-icon-wrapper">
-                <img class="google-icon"
-                     src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="google"/>
+                <img alt="google"
+                     class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"/>
                 <div class="provider-text">
                   Sign in with Google
                 </div>
               </div>
             </button>
             <button
-              type="button"
+              (click)="navigateToProvider(appleURL)"
+              class="provider-btn"
               color="primary"
               mat-raised-button
-              class="provider-btn"
-              (click)="navigateToProvider(appleURL)">
+              type="button">
               <div class="provider-icon-wrapper">
-                <img class="google-icon"
-                     src="https://commons.wikimedia.org/wiki/File:Apple_logo_black.svg" alt="apple"/>
+                <img alt="apple"
+                     class="google-icon" src="https://commons.wikimedia.org/wiki/File:Apple_logo_black.svg"/>
                 <div class="provider-text">
                   Sign in with Apple
                 </div>
               </div>
             </button>
             <button
-              type="button"
+              (click)="navigateToProvider(facebookURL)"
+              class="provider-btn"
               color="primary"
               mat-raised-button
-              class="provider-btn"
-              (click)="navigateToProvider(facebookURL)">
+              type="button">
               <div class="provider-icon-wrapper">
                 <img class="fb-icon"
                      src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"/>
@@ -105,18 +105,18 @@
       </mat-tab>
       <mat-tab label="Sign up">
         <mat-card-content>
-          <form name="signUpForm" (ngSubmit)="upF.form.valid && onRegistrationSubmit()" #upF="ngForm">
+          <form #upF="ngForm" (ngSubmit)="upF.form.valid && onRegistrationSubmit()" name="signUpForm">
             <mat-form-field hideRequiredMarker>
               <input
-                matInput
-                placeholder="Username"
-                required
+                #username="ngModel"
                 [(ngModel)]="signUpForm.username"
+                matInput
                 maxlength="20"
-                name="username"
                 minlength="4"
+                name="username"
                 ngModel
-                #username="ngModel">
+                placeholder="Username"
+                required>
               <mat-icon matSuffix>perm_identity</mat-icon>
               <mat-error
                 *ngIf="username.errors && username.errors.required">
@@ -131,31 +131,31 @@
 
             <mat-form-field hideRequiredMarker>
               <input
-                matInput
-                placeholder="Email"
-                required
-                name="email"
+                #email="ngModel"
                 [(ngModel)]="signUpForm.email"
-                ngModel
                 email
-                #email="ngModel">
+                matInput
+                name="email"
+                ngModel
+                placeholder="Email"
+                required>
               <mat-error *ngIf="email.errors && email.errors.required">Valid email is required</mat-error>
               <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
-            <mat-form-field hideRequiredMarker (capsLock)="capsOn=$event">
+            <mat-form-field (capsLock)="capsOn=$event" hideRequiredMarker>
               <input
+                #password="ngModel"
+                [(ngModel)]="signUpForm.password"
+                [matTooltipDisabled]="!capsOn"
                 matInput
-                placeholder="Password"
-                type="password"
-                required
+                matTooltip="Caps Lock"
+                matTooltipPosition="left"
                 minlength="8"
                 name="password"
                 ngModel
-                [(ngModel)]="signUpForm.password"
-                matTooltip="Caps Lock"
-                matTooltipPosition="left"
-                [matTooltipDisabled]="!capsOn"
-                #password="ngModel">
+                placeholder="Password"
+                required
+                type="password">
               <mat-error
                 *ngIf="password.errors && password.errors.required">
                 Password is required
@@ -167,22 +167,22 @@
               <mat-icon matSuffix>lock</mat-icon>
 
             </mat-form-field>
-            <mat-error class="registration-result"
-                       *ngIf="upF.submitted && isSignUpFailed">
-              {{errorMessage}}
+            <mat-error *ngIf="upF.submitted && isSignUpFailed"
+                       class="registration-result">
+              {{ errorMessage }}
             </mat-error>
             <button
-              mat-raised-button
-              color="accent"
+              [disabled]="!upF.form.valid"
               class="login-button"
-              [disabled]="!upF.form.valid">
+              color="accent"
+              mat-raised-button>
               Sign up
             </button>
             <button
-              color="primary"
-              mat-raised-button
+              (click)="navigateToProvider(googleURL)"
               class="provider-btn"
-              (click)="navigateToProvider(googleURL)">
+              color="primary"
+              mat-raised-button>
               <div class="provider-icon-wrapper">
                 <img class="google-icon"
                      src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
@@ -192,10 +192,10 @@
               </div>
             </button>
             <button
-              color="primary"
-              mat-raised-button
+              (click)="navigateToProvider(facebookURL)"
               class="provider-btn"
-              (click)="navigateToProvider(facebookURL)">
+              color="primary"
+              mat-raised-button>
               <div class="provider-icon-wrapper">
                 <img class="fb-icon"
                      src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"/>

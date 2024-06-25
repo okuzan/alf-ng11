@@ -3,20 +3,17 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AppConstants} from '../common/app.constants';
 import {CardCreationDto, CardDto, CardSuggestionDto, CardUpdateDto} from '../models/card.model';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
-const httpOptionsText = {
-  headers: new HttpHeaders({'Content-Type': 'text/html'})
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardService {
-  private apiURL = AppConstants.CARD_API; // Assuming this is something like 'http://localhost:8080/api/cards'
+  private apiURL = AppConstants.CARD_API;
 
   constructor(private http: HttpClient,
               public dialog: MatDialog) {
@@ -31,19 +28,16 @@ export class CardService {
         panelClass: 'thin-dialog'
       }
     );
-    if ((typeof component !== 'undefined'))
+    if ((typeof component !== 'undefined')) {
       dialogRef.afterClosed().subscribe(data => {
         component.ngOnInit();
       }, error => {
-      })
+      });
+    }
   }
 
   createCard(cardCreationDto: CardCreationDto): Observable<CardDto> {
     return this.http.post<CardDto>(this.apiURL, cardCreationDto, httpOptions);
-  }
-
-  getCard(id: number): Observable<CardDto> {
-    return this.http.get<CardDto>(`${this.apiURL}/${id}`);
   }
 
   updateCard(id: number, cardUpdateDto: CardUpdateDto): Observable<void> {
@@ -52,10 +46,6 @@ export class CardService {
 
   deleteCard(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
-  }
-
-  getCards(): Observable<CardDto[]> {
-    return this.http.get<CardDto[]>(this.apiURL);
   }
 
   getCardsOfLang(code: string): Observable<CardDto[]> {
@@ -80,7 +70,8 @@ export class CardService {
 
   declineCard(suggestionId: number): Observable<any> {
     return this.http.put(`${AppConstants.SUGGESTION_API}/${suggestionId}/decline`, null, httpOptions);
-  }}
+  }
+}
 
 @Component({
   selector: 'card-view',
@@ -89,7 +80,7 @@ export class CardService {
 export class CardDialog {
   card: CardDto;
   mode: string;
-  dialog: MatDialogRef<CardDialog>
+  dialog: MatDialogRef<CardDialog>;
 
   constructor(
     public dialogRef: MatDialogRef<CardDialog>,

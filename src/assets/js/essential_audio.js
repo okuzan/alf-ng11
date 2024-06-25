@@ -47,7 +47,7 @@ var Essential_Audio = (
     } else {
       document.addEventListener("DOMContentLoaded", B)
     }
-    ;
+
 
     function B() {
       var ia = document.querySelectorAll(pa);
@@ -130,7 +130,7 @@ var Essential_Audio = (
           Bb(a)
         }
       })
-    };
+    }
 
     function Ba(a) {
       a.zp = t;
@@ -159,7 +159,7 @@ var Essential_Audio = (
             }
           }
         }
-      };window.addEventListener(ph, Bd);
+      }window.addEventListener(ph, Bd);
       window.addEventListener(pj, Bd);
 
       function Bd() {
@@ -189,7 +189,7 @@ var Essential_Audio = (
         }
         a.zp = f
       }
-    };
+    }
 
     function Bb(a) {
       if (a.zc > 0) {
@@ -211,7 +211,7 @@ var Essential_Audio = (
               a.play()
             }
           }
-        };window.addEventListener(ph, Bf);
+        }window.addEventListener(ph, Bf);
         window.addEventListener(pj, Bf);
 
         function Bf() {
@@ -244,7 +244,7 @@ var Essential_Audio = (
           a.zp = f
         }
       }
-    };
+    }
 
     function C(a) {
       if (c) {
@@ -265,12 +265,12 @@ var Essential_Audio = (
           E(a)
         }
       }
-    };
+    }
 
     function D(a, vq) {
       a.za.setAttribute("class", "");
       a.za.classList.add(vq)
-    };
+    }
 
     function E(a) {
       D(a, "load");
@@ -348,7 +348,7 @@ var Essential_Audio = (
           F(a, ve, i)
         })
       }
-    };
+    }
 
     function F(a, ve, vf) {
       var vg = new XMLHttpRequest;
@@ -363,7 +363,7 @@ var Essential_Audio = (
       };
       vg.open("HEAD", ve);
       vg.send()
-    };
+    }
 
     function G(vg, a, ve, vf) {
       if (vg.status == 200) {
@@ -376,7 +376,7 @@ var Essential_Audio = (
         }
       }
       vg.onerror = n
-    };
+    }
 
     function H(a) {
       a.zj = f;
@@ -387,7 +387,7 @@ var Essential_Audio = (
       if (a.id == c.id) {
         c = f
       }
-    };
+    }
 
     function J(a) {
       if (a.preload == "auto") {
@@ -417,7 +417,7 @@ var Essential_Audio = (
           a.tb = setInterval(L, 250, a)
         }
       }
-    };
+    }
 
     function K(a) {
       a.pause();
@@ -431,7 +431,7 @@ var Essential_Audio = (
           c = f
         }
       }
-    };
+    }
 
     function L(a) {
       V(a);
@@ -446,7 +446,7 @@ var Essential_Audio = (
         clearInterval(a.tb);
         M(a)
       }
-    };
+    }
 
     function M(a) {
       a.zj = f;
@@ -458,7 +458,7 @@ var Essential_Audio = (
       } else {
         R(a)
       }
-    };
+    }
 
     function O(a) {
       if (pm(a) == pl(a)) {
@@ -478,7 +478,7 @@ var Essential_Audio = (
         clearTimeout(vs)
       }, 25);
       D(a, "play")
-    };
+    }
 
     function N(vr) {
       if (!vr) {
@@ -492,7 +492,7 @@ var Essential_Audio = (
       if (!a.zn) {
         C(a)
       }
-    };
+    }
 
     function Q(a) {
       if (!a.zp) {
@@ -505,12 +505,12 @@ var Essential_Audio = (
           }
         }
       }
-    };
+    }
 
     function P(a) {
       a.zh = Math.round(pm(a) * a.zc / pl(a));
       a.za.style.left = a.zh + "px"
-    };
+    }
 
     function R(vp) {
       if (c) {
@@ -529,7 +529,7 @@ var Essential_Audio = (
         }
         c = f
       }
-    };
+    }
 
     function T(a) {
       if (pl(a)) {
@@ -537,7 +537,7 @@ var Essential_Audio = (
       }
       a.zh = 0;
       a.za.style.left = 0 + "px"
-    };
+    }
 
     function S(vr) {
       if (!vr) {
@@ -549,7 +549,7 @@ var Essential_Audio = (
       }
       var a = A[vr];
       T(a)
-    };
+    }
 
     function U(a) {
       if (pl(a)) {
@@ -572,13 +572,13 @@ var Essential_Audio = (
           a.zq = f
         }
       }
-    };
+    }
 
     function V(a) {
       if (a.zc > 0) {
         a.currentTime = a.zh / a.zc * pl(a)
       }
-    };
+    }
 
     function W() {
       var vm = document.querySelectorAll(pa);
@@ -605,7 +605,7 @@ var Essential_Audio = (
           a.ta = setInterval(U, 500, a)
         }
       })
-    };window.addEventListener("resize", W);
+    }window.addEventListener("resize", W);
     return {init: B, Audio: A, Play: N, Stop: R, Reset: S, players: Xa, active: Xb, last: Xc};
 
     function Xa() {

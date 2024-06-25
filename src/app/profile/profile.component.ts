@@ -4,15 +4,15 @@ import {UserService} from '../_services/user.service';
 import {Friend, FriendshipActionDto, User} from '../models/user.model';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {FriendshipService} from "../_services/friendship.service";
-import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {Observable} from "rxjs";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {MatChipInputEvent} from "@angular/material/chips";
-import {map, startWith} from "rxjs/operators";
-import {DataService} from "../_services/data.service";
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {FriendshipService} from '../_services/friendship.service';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {Observable} from 'rxjs';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {map, startWith} from 'rxjs/operators';
+import {DataService} from '../_services/data.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 enum Action {
   REQUEST,
@@ -63,12 +63,11 @@ export class ProfileComponent implements OnInit {
     '#7d3585', // blue
     '#814033', // blue
   ];
-  private isLoggedIn: boolean;
   friendSearchText: string;
   notFound: boolean;
   placeholder: any;
-  searchYourself: boolean = false;
-  searchAlreadyFriend: boolean = false;
+  searchYourself = false;
+  searchAlreadyFriend = false;
   currentUsername: boolean;
   availableUsername: boolean;
   unavailableUsername: boolean;
@@ -80,6 +79,7 @@ export class ProfileComponent implements OnInit {
     username: new FormControl('', Validators.compose(
       [Validators.pattern('^[a-zA-Z0-9_\-]+$'), Validators.required])),
   });
+  private isLoggedIn: boolean;
 
   constructor(private token: TokenStorageService,
               private userService: UserService,
@@ -89,46 +89,38 @@ export class ProfileComponent implements OnInit {
   ) {
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toString().toLowerCase();
-    return this.allTags.filter(fruit => fruit.toLowerCase().includes(filterValue));
+  public get action(): typeof Action {
+    return Action;
   }
 
   selectedTarget(event: MatAutocompleteSelectedEvent): void {
     this.targetLangTags.push(event.option.viewValue);
     this.tagInputTarget.nativeElement.value = '';
-    // this.langFormGroup.controls.tags.setValue(null);
   }
 
   selectedFluent(event: MatAutocompleteSelectedEvent): void {
     this.fluentLangTags.push(event.option.viewValue);
     this.tagInputFluent.nativeElement.value = '';
-    // this.langFormGroup.controls.tags.setValue(null);
   }
 
   add(event: MatChipInputEvent, langTags: string[]): void {
     const value = (event.value || '').trim();
 
     if (value && this.allTags.includes(value)) {
-      langTags.push(value)
+      langTags.push(value);
     }
 
     event.input.value = '';
-    // this.langFormGroup.controls.tags.setValue(null);
   }
 
   groupBy(arr, property) {
-    return arr.reduce(function (memo, x) {
+    return arr.reduce(function(memo, x) {
       if (!memo[x[property]]) {
         memo[x[property]] = [];
       }
       memo[x[property]].push(x);
       return memo;
     }, {});
-  }
-
-  public get action(): typeof Action {
-    return Action;
   }
 
   ngOnInit(): void {
@@ -146,19 +138,19 @@ export class ProfileComponent implements OnInit {
       map((tag: string | null) => (tag ? this._filter(tag) : this.allTags.slice())),
     );
 
-    console.log(this.currentUser)
+    console.log(this.currentUser);
     this.langFormGroup.patchValue({
       fluentTags: this.currentUser.fluentLangs,
       targetTags: this.currentUser.targetLangs,
-    })
+    });
 
     this.targetLangTags = this.currentUser.targetLangs;
     this.fluentLangTags = this.currentUser.fluentLangs;
 
-    this.usernameFormGroup.controls.username.patchValue(this.currentUser.username)
-    console.log(this.currentUser.username)
+    this.usernameFormGroup.controls.username.patchValue(this.currentUser.username);
+    console.log(this.currentUser.username);
 
-    this.dto = <FriendshipActionDto>{};
+    this.dto = ({} as FriendshipActionDto);
     this.isLoggedIn = !!this.token.getToken();
     if (!this.isLoggedIn) {
       window.location.href = '/login';
@@ -167,7 +159,7 @@ export class ProfileComponent implements OnInit {
     this.friendshipService.getMyFriends().subscribe(
       data => {
         this.friends = data;
-        let sortedFriends = this.groupBy(data, 'status');
+        const sortedFriends = this.groupBy(data, 'status');
         console.log(this.friends);
         for (let i = 0; i < this.friends.length; i++) {
           this.avatarColors[this.friends[i].email] = this.getColor();
@@ -252,8 +244,6 @@ export class ProfileComponent implements OnInit {
         },
         err => {
           this.notFound = true;
-          console.log('NOT FOUND');
-          // this.content = JSON.parse(err.error).message;
         }
       );
     }
@@ -270,7 +260,6 @@ export class ProfileComponent implements OnInit {
 
   openDialog(): void {
     let dialogRef = this.dialog.open(AccountDeletionConfirmationDialog, {
-//       width: '250px',
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -282,16 +271,9 @@ export class ProfileComponent implements OnInit {
 
   saveTargetLangs() {
     this.userService.updateTargetLanguages(Array.from(this.targetLangTags)).subscribe(data => {
-      this.dataService.showToast("Changes saved");
+      this.dataService.showToast('Changes saved');
     }, error => {
-    })
-  }
-
-  saveFluentLangs() {
-    this.userService.updateFluentLanguages(Array.from(this.fluentLangTags)).subscribe(data => {
-      this.dataService.showToast("Changes saved");
-    }, error => {
-    })
+    });
   }
 
 
@@ -315,13 +297,18 @@ export class ProfileComponent implements OnInit {
 
   changeUsername() {
     this.userService.changeUsername(this.usernameFormGroup.controls.username.value).subscribe(data => {
-      this.dataService.showToast("Username changed")
+      this.dataService.showToast('Username changed');
     }, error => {
-    })
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.fluentLangTags, event.previousIndex, event.currentIndex);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toString().toLowerCase();
+    return this.allTags.filter(fruit => fruit.toLowerCase().includes(filterValue));
   }
 
 }

@@ -6,9 +6,10 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./games.component.css']
 })
 export class GamesComponent implements OnInit {
-  wordleLink: string = 'https://www.nytimes.com/games/wordle/index.html';
+  wordleLink = 'https://www.nytimes.com/games/wordle/index.html';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

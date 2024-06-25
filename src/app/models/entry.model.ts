@@ -1,5 +1,5 @@
 export interface EntryInfo {
   entry: string;
-  frequency: number
+  frequency: number;
   type: string;
 }

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {TokenStorageService} from '../_services/token-storage.service';
-import {CardDto} from "../models/card.model";
-import {MatDialog} from "@angular/material/dialog";
-import {CardService} from "../_services/card.service";
-import {User} from "../models/user.model";
-import {AppConstants} from "../common/app.constants";
+import {CardDto} from '../models/card.model';
+import {MatDialog} from '@angular/material/dialog';
+import {CardService} from '../_services/card.service';
+import {User} from '../models/user.model';
+import {AppConstants} from '../common/app.constants';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   }
 
   openDialogLocal(card: CardDto, mode: string): void {
-    this.cardService.openDialog(card, mode, this)
+    this.cardService.openDialog(card, mode, this);
   }
 
   getUser(): User {

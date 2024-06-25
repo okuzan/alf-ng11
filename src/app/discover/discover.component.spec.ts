@@ -8,9 +8,9 @@ describe('DiscoverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiscoverComponent ]
+      declarations: [DiscoverComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,16 @@
-<div id="app" class="app-body-wrap" [style]="{'--img': this.getBackgroundImg()}">
+<div [style]="{'--img': this.getBackgroundImg()}" class="app-body-wrap" id="app">
   <div class="app-body">
     <mat-toolbar class="custom-toolbar" color="accent">
     <span class="main-icon">
       <a mat-list-item routerLink="/">
-        <img src="../assets/img/icons/headicon.svg" alt="Logo" height="45" width="45">
+        <img alt="Logo" height="45" src="../assets/img/icons/headicon.svg" width="45">
       </a>
     </span>
-      <span style="color: yellow; border-width: thick; background-color: darkred" *ngIf="this.showTestLabel">
+      <span *ngIf="this.showTestLabel" style="color: yellow; border-width: thick; background-color: darkred">
       <a mat-button>TEST ENV</a>
     </span>
 
-      <span class="menu-item" *ngIf="isLoggedIn">
+      <span *ngIf="isLoggedIn" class="menu-item">
       <a class="nav-link" href="/home" mat-button routerLink="home"> Home</a>
     </span>
       <span class="menu-item">
@@ -21,11 +21,11 @@
     </span>
       <span class="spacer"></span>
 
-      <mat-form-field style="width: 3%" class="local-lang-picker" *ngIf="!isLoggedIn">
-        <mat-select [(ngModel)]="ui_lang" #langSelect (change)="changeUiLanguage(langSelect.value)"
-                    (selectionChange)="changeUiLanguage($event.value)" class="text-sm">
+      <mat-form-field *ngIf="!isLoggedIn" class="local-lang-picker" style="width: 3%">
+        <mat-select #langSelect (change)="changeUiLanguage(langSelect.value)" (selectionChange)="changeUiLanguage($event.value)"
+                    [(ngModel)]="uiLang" class="text-sm">
           <mat-option
-            *ngFor="let lang of ui_langs"
+            *ngFor="let lang of uiLangs"
             [value]="lang"
             class="matoption">
             {{ lang }}
@@ -33,12 +33,12 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-menu #languageMenu="matMenu" yPosition="below" xPosition="after" class="languagemenu">
-        <button *ngFor="let language of languages" [value]="language" mat-menu-item
-                (click)="changeLearningLanguage(language)"
-                class="thisbutton">
+      <mat-menu #languageMenu="matMenu" class="languagemenu" xPosition="after" yPosition="below">
+        <button (click)="changeLearningLanguage(language)" *ngFor="let language of languages" [value]="language"
+                class="thisbutton"
+                mat-menu-item>
           <mat-icon>language</mat-icon>
-          {{language}}
+          {{ language }}
         </button>
       </mat-menu>
 
@@ -51,26 +51,26 @@
       <!--      </button>-->
       <!--    </span>-->
       <span class="lang-span">
-      <button mat-button
+      <button *ngIf="isLoggedIn"
+              [matMenuTriggerFor]="languageMenu"
               [ngStyle]="{'color': this.color}"
               class="lang-btn"
-              [matMenuTriggerFor]="languageMenu"
-              *ngIf="isLoggedIn">
-            {{this.language.toUpperCase()}}
+              mat-button>
+            {{ this.language.toUpperCase() }}
       </button>
     </span>
       <span class="accountSpan">
 <!--      <button  mat-button [matMenuTriggerFor]="accountMenu" *ngIf="isLoggedIn">-->
-      <button mat-icon-button [matMenuTriggerFor]="accountMenu" *ngIf="isLoggedIn">
+      <button *ngIf="isLoggedIn" [matMenuTriggerFor]="accountMenu" mat-icon-button>
 <!--              <div class="inter">-->
-                <img class="imgg" [src]="this.user.profilePicLink" alt="Logo" height="38" width="38">
+                <img [src]="this.user.profilePicLink" alt="Logo" class="imgg" height="38" width="38">
         <!--                    <span>{{ currentUser.username }}</span>-->
         <!--              </div>-->
       </button>
     </span>
 
       <span class="accountSpan">
-      <button mat-icon-button routerLink="login" *ngIf="!isLoggedIn">
+      <button *ngIf="!isLoggedIn" mat-icon-button routerLink="login">
         <mat-icon>login</mat-icon>
       </button>
     </span>
@@ -81,10 +81,10 @@
       <!--            <span>{{ currentUser.username }}</span>-->
       <!--          </button>-->
       <!--        </span>-->
-      <mat-menu #accountMenu="matMenu" yPosition="below" xPosition="after">
+      <mat-menu #accountMenu="matMenu" xPosition="after" yPosition="below">
         <button mat-menu-item routerLink="profile">Profile</button>
         <button mat-menu-item routerLink="settings">Settings</button>
-        <button mat-menu-item class="nav-link" (click)="logout()">Log out</button>
+        <button (click)="logout()" class="nav-link" mat-menu-item>Log out</button>
       </mat-menu>
 
     </mat-toolbar>

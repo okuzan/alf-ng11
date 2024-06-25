@@ -15,22 +15,22 @@
                 <ng-container *ngIf="mode === 'suggest'">
                   You don't have it in your stock
                   <div>
-                    Sent by: {{this.card.userId}}
+                    Sent by: {{ this.card.userId }}
                   </div>
                 </ng-container>
                 <div class="meta-info">
-                  <mat-label class="toggle-label">Created: {{card.created}}</mat-label>
+                  <mat-label class="toggle-label">Created: {{ card.created }}</mat-label>
 
                   <ng-container *ngIf=!!card.updated>
-                    <mat-label class="toggle-label">Updated: {{card.updated}}</mat-label>
+                    <mat-label class="toggle-label">Updated: {{ card.updated }}</mat-label>
                   </ng-container>
 
-<!--                  <ng-container *ngIf=!!card.lastRepeat>-->
-<!--                    <mat-label class="toggle-label">Last repeat: {{card.lastRepeat}}</mat-label>-->
-<!--                  </ng-container>-->
+                  <!--                  <ng-container *ngIf=!!card.lastRepeat>-->
+                  <!--                    <mat-label class="toggle-label">Last repeat: {{card.lastRepeat}}</mat-label>-->
+                  <!--                  </ng-container>-->
 
                   <ng-container *ngIf=!!card.iteration>
-                    <mat-label class="toggle-label">Iteration: {{card.iteration}}</mat-label>
+                    <mat-label class="toggle-label">Iteration: {{ card.iteration }}</mat-label>
                   </ng-container>
                 </div>
 
@@ -48,7 +48,7 @@
                   </ng-container>
 
                   <ng-container *ngIf="showFriendSearch()">
-                    <form class="form-input-autocomplete" (ngSubmit)="selectFriend()">
+                    <form (ngSubmit)="selectFriend()" class="form-input-autocomplete">
                       <mat-form-field [style.width.px]=140 color="accent">
                         <input #input [(ngModel)]="searchText" [formControl]="formControl"
                                [matAutocomplete]="auto"
@@ -57,7 +57,7 @@
                           #auto="matAutocomplete"
                           (optionSelected)='optionSelectedHandler($event.option.value)'>
                           <mat-option *ngFor="let option of filteredOptions | async  | slice : 0 : 5" [value]="option">
-                            {{option}}
+                            {{ option }}
                           </mat-option>
                         </mat-autocomplete>
                       </mat-form-field>
@@ -71,8 +71,8 @@
           </div>
         </mat-expansion-panel>
       </ng-container>
-      <form [formGroup]="cardFormGroup" (keydown.enter)="$event.preventDefault()">
-        <mat-expansion-panel class="expansion-panel" [expanded]="mode === 'create'">
+      <form (keydown.enter)="$event.preventDefault()" [formGroup]="cardFormGroup">
+        <mat-expansion-panel [expanded]="mode === 'create'" class="expansion-panel">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Body
@@ -84,23 +84,23 @@
                 <div class="translations">
                   <div class="entry">
                     <mat-form-field class="" hideRequiredMarker>
-                      <input [readonly]="viewOnly()" autocomplete="off" matInput formControlName="entry"
+                      <input [readonly]="viewOnly()" autocomplete="off" formControlName="entry" matInput
                              placeholder="entry">
                     </mat-form-field>
                   </div>
                   <ng-container formArrayName="translations">
                     <ng-container *ngFor="let translationForm of this.translations.controls; let i = index">
-                      <div class="" [formGroup]="translationForm">
+                      <div [formGroup]="translationForm" class="">
                         <mat-form-field>
-                          <input matInput
+                          <input (keydown.delete)="deleteTranslationConditional(i)"
+                                 (keydown.enter)="addTranslation()"
                                  [readonly]="viewOnly()"
                                  formControlName="translation"
-                                 (keydown.enter)="addTranslation()"
-                                 (keydown.delete)="deleteTranslationConditional(i)"
+                                 matInput
                                  placeholder="translation">
                         </mat-form-field>
-                        <button mat-icon-button (click)="deleteTranslation(i)"
-                                *ngIf="this.translations.controls.length > 1">
+                        <button (click)="deleteTranslation(i)" *ngIf="this.translations.controls.length > 1"
+                                mat-icon-button>
                           <mat-icon class="delete-btn">
                             close
                           </mat-icon>
@@ -122,24 +122,24 @@
                   <ng-container formArrayName="examples">
                     <ng-container *ngFor="let exampleForm of this.examples.controls; let i = index">
                       <div class="blockWithButton">
-                        <div class="exampleBlock" [formGroup]="exampleForm">
+                        <div [formGroup]="exampleForm" class="exampleBlock">
                           <div>
                             <mat-form-field>
-                              <input matInput
+                              <input (keydown.delete)="deleteExampleConditional(i)"
+                                     (keydown.enter)="addExample()"
                                      [readonly]="viewOnly()"
                                      formControlName="example"
-                                     (keydown.enter)="addExample()"
-                                     (keydown.delete)="deleteExampleConditional(i)"
+                                     matInput
                                      placeholder="example">
                             </mat-form-field>
                           </div>
                           <div>
                             <mat-form-field>
-                              <input matInput
+                              <input (keydown.delete)="deleteExampleConditional(i)"
+                                     (keydown.enter)="addExample()"
                                      [readonly]="viewOnly()"
                                      formControlName="translation"
-                                     (keydown.enter)="addExample()"
-                                     (keydown.delete)="deleteExampleConditional(i)"
+                                     matInput
                                      placeholder="translation">
                             </mat-form-field>
                           </div>
@@ -155,10 +155,10 @@
                     </ng-container>
                   </ng-container>
                   <div class="button-div">
-                    <button class="add-icon" mat-icon-button
-                            (click)="addExample()"
+                    <button (click)="addExample()" *ngIf="this.examples.controls.slice(-1)[0].value.example && !viewOnly()"
+                            class="add-icon"
 
-                            *ngIf="this.examples.controls.slice(-1)[0].value.example && !viewOnly()">
+                            mat-icon-button>
                       <mat-icon class="">add</mat-icon>
                     </button>
                   </div>
@@ -178,15 +178,15 @@
             <div class="advanced-grid">
               <div class="notes">
                 <mat-form-field class="">
-                  <input autocomplete="off" [readonly]="viewOnly()" matInput formControlName="notes"
+                  <input [readonly]="viewOnly()" autocomplete="off" formControlName="notes" matInput
                          placeholder="notes">
                 </mat-form-field>
               </div>
 
               <div class="source">
                 <mat-form-field class="">
-<!--                  <input autocomplete="off" [readonly]="viewOnly()" matInput formControlName="source"-->
-<!--                         placeholder="source">-->
+                  <!--                  <input autocomplete="off" [readonly]="viewOnly()" matInput formControlName="source"-->
+                  <!--                         placeholder="source">-->
                 </mat-form-field>
               </div>
             </div>
@@ -194,24 +194,24 @@
               <mat-label>tags</mat-label>
               <mat-chip-list #chipList>
                 <mat-chip
-                  *ngFor="let tag of tags"
-                  (removed)="remove(tag)">
-                  {{tag}}
-                  <mat-icon matChipRemove *ngIf="!this.viewOnly">cancel</mat-icon>
+                  (removed)="remove(tag)"
+                  *ngFor="let tag of tags">
+                  {{ tag }}
+                  <mat-icon *ngIf="!this.viewOnly" matChipRemove>cancel</mat-icon>
                 </mat-chip>
                 <input
                   #tagInput
-                  [readonly]="viewOnly()"
-                  placeholder=""
-                  formControlName="tags"
+                  (matChipInputTokenEnd)="add($event)"
                   [matAutocomplete]="auto"
                   [matChipInputFor]="chipList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  (matChipInputTokenEnd)="add($event)">
+                  [readonly]="viewOnly()"
+                  formControlName="tags"
+                  placeholder="">
               </mat-chip-list>
               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                 <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-                  {{tag}}
+                  {{ tag }}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
@@ -222,14 +222,14 @@
               </div>
               <span class="spacer"></span>
               <mat-slider
+                [disabled]="viewOnly()"
+                [tickInterval]="1"
                 class="priority-slider"
-                max="3"
                 formControlName="priority"
+                max="3"
                 min="1"
                 step="1"
-                [disabled]="viewOnly()"
                 thumbLabel="true"
-                [tickInterval]="1"
               >
               </mat-slider>
             </div>
@@ -237,13 +237,13 @@
             <div class="active-learning-div toggle-div">
               <mat-label class="toggle-label">Learning mode:</mat-label>
               <span class="spacer"></span>
-              {{this.learningTypeLabel}}
+              {{ this.learningTypeLabel }}
               <mat-slide-toggle
                 (change)="changeLearningType($event)"
-                class="toggle"
-                checked="true"
-                color="primary"
                 [disabled]="viewOnly()"
+                checked="true"
+                class="toggle"
+                color="primary"
                 formControlName="activeLearning"
               >
               </mat-slide-toggle>
@@ -251,12 +251,12 @@
             <div class="irregular-plural-div toggle-div">
               <mat-label class="toggle-label">Plural form:</mat-label>
               <span class="spacer"></span>
-              {{this.pluralTypeLabel}}
+              {{ this.pluralTypeLabel }}
               <mat-slide-toggle
                 (change)="changePluralType($event)"
+                [disabled]="viewOnly()"
                 class="toggle"
                 color="primary"
-                [disabled]="viewOnly()"
                 formControlName="irregularPlural"
               >
               </mat-slide-toggle>
@@ -264,11 +264,11 @@
             <div class="irregular-spelling-div toggle-div">
               <mat-label class="toggle-label">Spelling/pronunciation:</mat-label>
               <span class="spacer"></span>
-              {{this.spellingTypeLabel}}
+              {{ this.spellingTypeLabel }}
               <mat-slide-toggle
                 (change)="changeSpellingType($event)"
-                class="toggle"
                 [disabled]="viewOnly()"
+                class="toggle"
                 color="primary"
                 formControlName="irregularSpelling"
               >
@@ -277,11 +277,11 @@
             <div class="toggle-div">
               <mat-label class="toggle-label">False friend:</mat-label>
               <span class="spacer"></span>
-              {{this.friendLabel}}
+              {{ this.friendLabel }}
               <mat-slide-toggle
                 (change)="changeFalseFriendType($event)"
-                class="toggle"
                 [disabled]="viewOnly()"
+                class="toggle"
                 color="primary"
                 formControlName="falseFriend"
               >
@@ -291,20 +291,20 @@
         </mat-expansion-panel>
         <ng-container *ngIf="mode === 'edit'" class="buttons-section">
           <button
-            color="warn"
-            class="delete-btn"
-            mat-raised-button
             (click)="openDeletionDialog()"
+            class="delete-btn"
+            color="warn"
+            mat-raised-button
           >
             Delete
           </button>
 
           <button
-            color="primary"
-            class="save-btn"
-            mat-raised-button
             (click)="updateCard()"
             [disabled]="this.formIntact"
+            class="save-btn"
+            color="primary"
+            mat-raised-button
           >
             Save
           </button>
@@ -312,11 +312,11 @@
         <ng-container *ngIf="mode === 'create'">
           <div class="create-btn-div">
             <button
-              color="primary"
-              class="create-btn"
-              mat-raised-button
               (click)="createCard()"
               [disabled]="!cardFormGroup.valid"
+              class="create-btn"
+              color="primary"
+              mat-raised-button
             >
               Create
             </button>
@@ -325,10 +325,10 @@
         <ng-container *ngIf="guestView()">
           <div class="create-btn-div">
             <button
-              color="primary"
-              class="create-btn"
-              mat-raised-button
               (click)="login()"
+              class="create-btn"
+              color="primary"
+              mat-raised-button
             >
               Sign up and save this card
             </button>
@@ -336,18 +336,18 @@
         </ng-container>
         <ng-container *ngIf="mode === 'suggest'">
           <button
-            color="primary"
-            class="decline-btn"
-            mat-raised-button
             (click)="declineCard()"
+            class="decline-btn"
+            color="primary"
+            mat-raised-button
           >
             Decline
           </button>
           <button
-            color="warn"
-            class="accept-btn"
-            mat-raised-button
             (click)="acceptCard()"
+            class="accept-btn"
+            color="warn"
+            mat-raised-button
           >
             Accept
           </button>

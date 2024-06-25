@@ -1,6 +1,6 @@
 export interface MachineTranslationDto {
   provider: string;
-  text: string
+  text: string;
 }
 
 export interface TranslationCard {

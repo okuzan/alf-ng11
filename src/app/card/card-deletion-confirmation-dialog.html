@@ -3,6 +3,6 @@
   This action cannot be undone.
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close (click)="dialogRef.close(false)">Cancel</button>
-  <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close(true)">Yes, delete</button>
+  <button (click)="dialogRef.close(false)" mat-button mat-dialog-close>Cancel</button>
+  <button (click)="dialogRef.close(true)" cdkFocusInitial mat-button mat-dialog-close>Yes, delete</button>
 </div>

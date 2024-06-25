@@ -9,7 +9,8 @@ import {FormControl} from '@angular/forms';
 export class SettingsComponent implements OnInit {
   mode = new FormControl('over');
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
 

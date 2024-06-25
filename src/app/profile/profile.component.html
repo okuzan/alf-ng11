@@ -11,16 +11,16 @@
     </h2>
     <div class="username">
       <form
-        [formGroup]="usernameFormGroup"
-        (ngSubmit)="uF.form.valid && checkUsername()"
-        class="example-form"
         #uF="ngForm"
+        (ngSubmit)="uF.form.valid && checkUsername()"
+        [formGroup]="usernameFormGroup"
+        class="example-form"
       >
         <mat-form-field [style.width.px]=200 appearance="outline">
           <mat-label>username</mat-label>
           <input formControlName="username"
-                 pattern="^[a-zA-Z0-9_\-]+$"
-                 name="username" matInput>
+                 matInput
+                 name="username" pattern="^[a-zA-Z0-9_\-]+$">
           <!--                    <button matSuffix mat-button>-->
           <!--                        <mat-icon>search</mat-icon>-->
           <!--                    </button>-->
@@ -39,11 +39,11 @@
 
       <div class="create-btn-div">
         <button
-          color="primary"
-          class="create-btn"
-          [disabled]="!this.availableUsername"
-          mat-raised-button
           (click)="changeUsername()"
+          [disabled]="!this.availableUsername"
+          class="create-btn"
+          color="primary"
+          mat-raised-button
         >
           Change username
         </button>
@@ -64,11 +64,11 @@
           Friends
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div style="display: inline-block;" *ngFor="let friend of friendsMutual">
-    <span style="position:fixed;" #spanTrigger class="context-menu-trigger" #matTrigger="matMenuTrigger"
-          [matMenuTriggerFor]="friendsContextMenu"></span>
+      <div *ngFor="let friend of friendsMutual" style="display: inline-block;">
+    <span #matTrigger="matMenuTrigger" #spanTrigger [matMenuTriggerFor]="friendsContextMenu" class="context-menu-trigger"
+          style="position:fixed;"></span>
         <div (contextmenu)="openContextMenu($event, matTrigger, spanTrigger, friend)">
-          <div class="circle" [ngStyle]="{'background-color':  this.avatarColors[friend.email] }">
+          <div [ngStyle]="{'background-color':  this.avatarColors[friend.email] }" class="circle">
             <div class="initials">
               {{ createInitials(friend.username) }}
             </div>
@@ -86,11 +86,11 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div style="display: inline-block;" *ngFor="let friend of friendsBlocked">
-    <span style="position:fixed;" #spanTrigger class="context-menu-trigger" #matTrigger="matMenuTrigger"
-          [matMenuTriggerFor]="blockedContextMenu"></span>
+      <div *ngFor="let friend of friendsBlocked" style="display: inline-block;">
+    <span #matTrigger="matMenuTrigger" #spanTrigger [matMenuTriggerFor]="blockedContextMenu" class="context-menu-trigger"
+          style="position:fixed;"></span>
         <div (contextmenu)="openContextMenu($event, matTrigger, spanTrigger, friend)">
-          <div class="circle" [ngStyle]="{'background-color': this.avatarColors[friend.email] }">
+          <div [ngStyle]="{'background-color': this.avatarColors[friend.email] }" class="circle">
             <div class="initials">
               {{ createInitials(friend.username) }}
             </div>
@@ -109,12 +109,12 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div style="display: inline-block;" *ngFor="let friend of friendsAskedMe">
-    <span style="position:fixed;" #spanTrigger class="context-menu-trigger" #matTrigger="matMenuTrigger"
-          [matMenuTriggerFor]="incomingContextMenu"></span>
+      <div *ngFor="let friend of friendsAskedMe" style="display: inline-block;">
+    <span #matTrigger="matMenuTrigger" #spanTrigger [matMenuTriggerFor]="incomingContextMenu" class="context-menu-trigger"
+          style="position:fixed;"></span>
 
         <div (contextmenu)="openContextMenu($event, matTrigger, spanTrigger, friend)">
-          <div class="circle" [ngStyle]="{'background-color':  this.avatarColors[friend.email] }">
+          <div [ngStyle]="{'background-color':  this.avatarColors[friend.email] }" class="circle">
             <div class="initials">
               {{ createInitials(friend.username) }}
             </div>
@@ -133,13 +133,13 @@
           Outcoming requests
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div style="display: inline-block;" *ngFor="let friend of friendsAsked">
-    <span style="position:fixed;" #spanTrigger class="context-menu-trigger" #matTrigger="matMenuTrigger"
-          [matMenuTriggerFor]="outcomingContextMenu"></span>
+      <div *ngFor="let friend of friendsAsked" style="display: inline-block;">
+    <span #matTrigger="matMenuTrigger" #spanTrigger [matMenuTriggerFor]="outcomingContextMenu" class="context-menu-trigger"
+          style="position:fixed;"></span>
 
         <div (contextmenu)="openContextMenu($event, matTrigger, spanTrigger, friend)">
-          <div class="circle" [ngStyle]="{'background-color':  this.avatarColors[friend.email] }"
-               [matTooltip]="friend.username"
+          <div [matTooltip]="friend.username" [ngStyle]="{'background-color':  this.avatarColors[friend.email] }"
+               class="circle"
                matTooltipClass="tooltip-red"
           >
             <div class="initials">
@@ -153,12 +153,12 @@
 
   <div class="friend-search">
     Find someone!
-    <form class="example-form" (ngSubmit)="searchPeople()">
+    <form (ngSubmit)="searchPeople()" class="example-form">
       <mat-form-field [style.width.px]=250>
         <mat-label>Make friends with</mat-label>
-        <input [(ngModel)]="friendSearchText" name="search" matInput>
+        <input [(ngModel)]="friendSearchText" matInput name="search">
         <!--      <mat-placeholder class="placeholder">Search for your friend</mat-placeholder>-->
-        <button matSuffix mat-button>
+        <button mat-button matSuffix>
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
@@ -175,10 +175,10 @@
   </div>
 
   <div *ngIf="!!searchFriend">
-  <span style="position:fixed;" #spanTrigger class="context-menu-trigger" #matTrigger="matMenuTrigger"
-        [matMenuTriggerFor]="strangersContextMenu"></span>
+  <span #matTrigger="matMenuTrigger" #spanTrigger [matMenuTriggerFor]="strangersContextMenu" class="context-menu-trigger"
+        style="position:fixed;"></span>
     <div (contextmenu)="openContextMenu($event, matTrigger, spanTrigger, searchFriend)">
-      <div class="circle" [ngStyle]="{'background-color':  this.colors[0] }">
+      <div [ngStyle]="{'background-color':  this.colors[0] }" class="circle">
         <div class="initials">
           {{ createInitials(searchFriend.username) }}
         </div>
@@ -188,92 +188,92 @@
 
 
   <mat-menu #incomingContextMenu="matMenu">
-    <button mat-menu-item (click)="friendshipAction(action.ACCEPT)">Accept</button>
-    <button mat-menu-item (click)="friendshipAction(action.REJECT)">Reject</button>
-    <button mat-menu-item (click)="friendshipAction(action.BLOCK)">Block</button>
+    <button (click)="friendshipAction(action.ACCEPT)" mat-menu-item>Accept</button>
+    <button (click)="friendshipAction(action.REJECT)" mat-menu-item>Reject</button>
+    <button (click)="friendshipAction(action.BLOCK)" mat-menu-item>Block</button>
   </mat-menu>
 
   <mat-menu #blockedContextMenu="matMenu">
-    <button mat-menu-item (click)="friendshipAction(action.UNBLOCK)">Unblock</button>
+    <button (click)="friendshipAction(action.UNBLOCK)" mat-menu-item>Unblock</button>
   </mat-menu>
   <mat-menu #strangersContextMenu="matMenu">
-    <button mat-menu-item (click)="friendshipAction(action.REQUEST)">Request</button>
+    <button (click)="friendshipAction(action.REQUEST)" mat-menu-item>Request</button>
   </mat-menu>
 
   <mat-menu #outcomingContextMenu="matMenu">
-    <button mat-menu-item (click)="friendshipAction(action.CANCEL)">Cancel</button>
+    <button (click)="friendshipAction(action.CANCEL)" mat-menu-item>Cancel</button>
   </mat-menu>
 
   <mat-menu #friendsContextMenu="matMenu">
-    <button mat-menu-item (click)="friendshipAction(action.UNFRIEND)">Unfriend</button>
-    <button mat-menu-item (click)="friendshipAction(action.BLOCK)">Block</button>
+    <button (click)="friendshipAction(action.UNFRIEND)" mat-menu-item>Unfriend</button>
+    <button (click)="friendshipAction(action.BLOCK)" mat-menu-item>Block</button>
   </mat-menu>
 
   <div>
     <h1>Languages</h1>
-    <form [formGroup]="langFormGroup" (keydown.enter)="$event.preventDefault()" class="lang-form">
-      <mat-form-field class="lang-tag-field" [style.width.px]=" targetLangTags.length*70">
+    <form (keydown.enter)="$event.preventDefault()" [formGroup]="langFormGroup" class="lang-form">
+      <mat-form-field [style.width.px]=" targetLangTags.length*70" class="lang-tag-field">
 
         <mat-label>Target languages</mat-label>
         <mat-chip-list #targetChipList>
           <mat-chip #chip (focus)="chip.blur()"
-                    *ngFor="let tag of targetLangTags"
-                    (removed)="this.targetLangTags.splice(this.targetLangTags.indexOf(tag), 1)">
-            {{tag}}
-            <mat-icon matChipRemove *ngIf="this.targetLangTags.length > 1">cancel</mat-icon>
+                    (removed)="this.targetLangTags.splice(this.targetLangTags.indexOf(tag), 1)"
+                    *ngFor="let tag of targetLangTags">
+            {{ tag }}
+            <mat-icon *ngIf="this.targetLangTags.length > 1" matChipRemove>cancel</mat-icon>
           </mat-chip>
           <input
             #tagInputTarget
-            placeholder=""
-            formControlName="targetTags"
+            (matChipInputTokenEnd)="add($event, targetLangTags)"
             [matAutocomplete]="autoTarget"
             [matChipInputFor]="targetChipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="add($event, targetLangTags)">
+            formControlName="targetTags"
+            placeholder="">
         </mat-chip-list>
         <mat-autocomplete #autoTarget="matAutocomplete" (optionSelected)="selectedTarget($event)">
           <mat-option *ngFor="let tag of filteredTargetTags | async" [value]="tag">
-            {{tag}}
+            {{ tag }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
 
-      <mat-form-field class="lang-tag-field" [style.width.px]=" fluentLangTags.length*70">
+      <mat-form-field [style.width.px]=" fluentLangTags.length*70" class="lang-tag-field">
         <mat-label>Fluent languages</mat-label>
         <mat-chip-list #fluentChipList
+                       (cdkDropListDropped)="drop($event)"
                        cdkDropList
-                       cdkDropListOrientation="horizontal"
-                       (cdkDropListDropped)="drop($event)">
+                       cdkDropListOrientation="horizontal">
           <mat-chip #chip (focus)="chip.blur()"
-                    cdkDrag
+                    (removed)="this.fluentLangTags.splice(this.fluentLangTags.indexOf(tag), 1)"
                     *ngFor="let tag of fluentLangTags"
-                    (removed)="this.fluentLangTags.splice(this.fluentLangTags.indexOf(tag), 1)">
-            {{tag}}
-            <mat-icon matChipRemove *ngIf="this.fluentLangTags.length > 1">cancel</mat-icon>
+                    cdkDrag>
+            {{ tag }}
+            <mat-icon *ngIf="this.fluentLangTags.length > 1" matChipRemove>cancel</mat-icon>
           </mat-chip>
           <input
             #tagInputFluent
-            placeholder=""
-            formControlName="fluentTags"
+            (matChipInputTokenEnd)="add($event, fluentLangTags)"
             [matAutocomplete]="autoFluent"
             [matChipInputFor]="fluentChipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="add($event, fluentLangTags)">
+            formControlName="fluentTags"
+            placeholder="">
         </mat-chip-list>
         <mat-autocomplete #autoFluent="matAutocomplete" (optionSelected)="selectedFluent($event)">
           <mat-option *ngFor="let tag of filteredFluentTags | async" [value]="tag">
-            {{tag}}
+            {{ tag }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
 
       <div class="create-btn-div">
         <button
-          color="primary"
-          class="create-btn"
-          mat-raised-button
           (click)="saveTargetLangs()"
           [disabled]="!langFormGroup.valid"
+          class="create-btn"
+          color="primary"
+          mat-raised-button
         >
           Save
         </button>
@@ -284,10 +284,10 @@
 
   <div>
     <button
-      color="warn"
-      mat-raised-button
+      (click)="openDialog()"
       class="delete-button"
-      (click)="openDialog()">
+      color="warn"
+      mat-raised-button>
       <div class="provider-icon-wrapper">
         DELETE ACCOUNT
       </div>

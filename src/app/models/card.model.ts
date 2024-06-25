@@ -55,6 +55,7 @@ export interface TagDto {
   id: number;
   text: string;
 }
+
 export interface CardCreationDto {
   entry: string;
   language: string;

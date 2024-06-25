@@ -1,14 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Directive,
-  ElementRef,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, Directive, ElementRef, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {Observable, of} from 'rxjs';
 import {FormControl} from '@angular/forms';
@@ -26,7 +16,7 @@ import {CardDialog, CardService} from '../_services/card.service';
 import {CardDto, ReportDto} from '../models/card.model';
 import {SafeUrl} from '@angular/platform-browser';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
 declare var Essential_Audio;
 
@@ -39,7 +29,6 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
   searched: boolean;
   parallelMode: boolean;
   audioAvailable: boolean;
-  creationInvoked: boolean;
   ttsReceived: boolean;
   chunkInserted: boolean;
 
@@ -49,8 +38,6 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
   wordlist: string[] = ['aaaa', 'bbbb'];
   content: string;
   cardSearchLabel: string;
-  frenchRegex: string;
-  germanRegex: string;
   spanishRegex: string;
   englishRegex: string;
   russianRegex: string;
@@ -111,25 +98,6 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
         mode: 'create',
       },
       panelClass: 'thin-dialog'
-    });
-    // dialogRef.afterClosed().subscribe(() => {
-    //   this.router.navigate([''], {}).then(r => {
-    //     console.log("success")
-    //   });
-    // });
-    //
-  }
-
-  filterValues(value: string): Promise<string[]> {
-    const filterValue = value.toLowerCase().split(' ').pop();
-    const url = `https://api.datamuse.com/sug?k=demo&s=${filterValue}`;
-
-    return this.http.get<any[]>(url).toPromise().then(res => {
-      const suggestions = res.map(entry => entry.word);
-      return suggestions;
-    }).catch(err => {
-      console.error('Failed to fetch suggestions from API', err);
-      return [];
     });
   }
 
@@ -215,23 +183,11 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    // this.filteredOptions.
-  }
-
-  invokeCreation(): void {
-    this.creationInvoked = true;
   }
 
   optionSelectedHandler(value: any) {
     const before = this.oldValue.substr(0, this.oldValue.lastIndexOf(' ') + 1);
     this.searchText = (before + ' ' + value).replace(/\s+/g, ' ').trim();
-  }
-
-  prettify(text: string) {
-    return text
-      .replace(/\.$/g, '')
-      .replace(/\s\s+/g, ' ')
-      .trim();
   }
 
   openDialogLocal(card: CardDto, mode: string): void {
@@ -300,22 +256,6 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  urban() {
-  }
-
-  geolocate() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition);
-    } else {
-      // I believe it may also mean geolocation isn't supported
-      alert('Geolocation denied');
-    }
-  }
-
-  showPosition(position) {
-    alert(`${position.coords.longitude} - ${position.coords.latitude}`);
-  }
-
   getTTS() {
     this.ttsReceived = true;
     const url = 'http://localhost:9998/api/lang/audio/'
@@ -339,20 +279,6 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       new Audio(this.audioLinkUnsafe).play();
     }
-  }
-
-  showTranslation(lang: string) {
-    this.discoveryService.translate(this.searchText, this.tokenStorageService.getCurLang(), lang).subscribe(data => {
-      this.parallelMode = true;
-      this.translationCards[0] = data.body;
-      console.log(data.body);
-    }, error => {
-      if (error.status === 403) {
-        console.log('Limit exceeded');
-      } else {
-        console.log('ISE 500');
-      }
-    });
   }
 
   positionSearch() {

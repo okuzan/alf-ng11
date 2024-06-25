@@ -8,12 +8,7 @@ import {AppComponent} from './app.component';
 import {LoginComponent, TrackCapsDirective} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
-import {
-  CardCreationDialog,
-  DialogEntryComponent,
-  DiscoverComponent,
-  FocusOnShowDirective
-} from './discover/discover.component';
+import {CardCreationDialog, DialogEntryComponent, DiscoverComponent, FocusOnShowDirective} from './discover/discover.component';
 import {SettingsComponent} from './settings/settings.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';

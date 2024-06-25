@@ -1,41 +1,41 @@
-<div class="friend-search" [ngStyle]="{'margin-top': positionSearch()}">
+<div [ngStyle]="{'margin-top': positionSearch()}" class="friend-search">
   <ng-container *ngIf="!searched">
-    <button mat-icon-button class="random-btn" (click)="getRandomWord()">
-      <img src="../assets/img/icons/random.svg" alt="Random" height="40" width="40">
+    <button (click)="getRandomWord()" class="random-btn" mat-icon-button>
+      <img alt="Random" height="40" src="../assets/img/icons/random.svg" width="40">
     </button>
   </ng-container>
   <ng-container *ngIf="searched">
-    <button mat-icon-button class="random-btn" (click)="showEngines()">
-      <img src="../assets/img/icons/book-engine.svg" alt="Random" height="50" width="50">
+    <button (click)="showEngines()" class="random-btn" mat-icon-button>
+      <img alt="Random" height="50" src="../assets/img/icons/book-engine.svg" width="50">
     </button>
   </ng-container>
-  <form class="form-input-autocomplete" (ngSubmit)="search()">
+  <form (ngSubmit)="search()" class="form-input-autocomplete">
     <mat-form-field [style.width.px]=800 color="accent">
-      <textarea matInput
-                (keydown.enter)="search(); $event.preventDefault()"
-                id="text-area"
-                [formControl]="formControl"
-                [(ngModel)]="searchText"
+      <textarea #autosize="cdkTextareaAutosize"
                 #textarea
+                (keydown.enter)="search(); $event.preventDefault()"
+                [(ngModel)]="searchText"
                 [appFocus]="true"
-                cdkTextareaAutosize
+                [formControl]="formControl"
                 [matAutocomplete]="auto"
-                class="input-autocomplete"
-                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMaxRows="5"
                 cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="5">
+                cdkTextareaAutosize
+                class="input-autocomplete"
+                id="text-area"
+                matInput>
       </textarea>
       <mat-autocomplete
         #auto="matAutocomplete"
         (optionSelected)='optionSelectedHandler($event.option.value)'>
         <mat-option *ngFor="let option of filteredOptions | async  | slice : 0 : 5" [value]="option">
-          {{option}}
+          {{ option }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <button mat-icon-button class="create-btn" (click)="openCreationDialog()">
-    <img src="../assets/img/icons/create.svg" alt="Create" height="50" width="50">
+  <button (click)="openCreationDialog()" class="create-btn" mat-icon-button>
+    <img alt="Create" height="50" src="../assets/img/icons/create.svg" width="50">
   </button>
 
 </div>
@@ -52,137 +52,137 @@
     </div>
   </ng-container>
 
-    <!--  <ng-container *ngIf="loading">-->
-    <!--    <div class="spinner-border" role="status">-->
-    <!--      <span class="visually-hidden">Loading...</span>-->
-    <!--    </div>-->
-    <!--  </ng-container>-->
+  <!--  <ng-container *ngIf="loading">-->
+  <!--    <div class="spinner-border" role="status">-->
+  <!--      <span class="visually-hidden">Loading...</span>-->
+  <!--    </div>-->
+  <!--  </ng-container>-->
 
-    <div class="engines-div">
-      <mat-expansion-panel hideToggle class="expansion-panel" [expanded]="this.engines">
-        <div class="expansion-panel-content">
-          <div class="engines">
-            <a target="_blank" [href]="getReversoLink()" class="button"><img
-              src="../../assets/img/services/reverso.svg"
-              alt="Reverso"
-              height="60" width="60"
-              class="small-icon"></a>
+  <div class="engines-div">
+    <mat-expansion-panel [expanded]="this.engines" class="expansion-panel" hideToggle>
+      <div class="expansion-panel-content">
+        <div class="engines">
+          <a [href]="getReversoLink()" class="button" target="_blank"><img
+            alt="Reverso"
+            class="small-icon"
+            height="60" src="../../assets/img/services/reverso.svg"
+            width="60"></a>
 
-            <a target="_blank" [href]="getUrbanLink()" class="button"><img
-              src="../../assets/img/services/urban.svg"
-              alt="Urban"
-              height="80" width="80"></a>
+          <a [href]="getUrbanLink()" class="button" target="_blank"><img
+            alt="Urban"
+            height="80"
+            src="../../assets/img/services/urban.svg" width="80"></a>
 
-            <a target="_blank" [href]="getMerriamWebsterLink()"><img
-              src="../../assets/img/services/merriam-webster.svg"
-              alt="Merriam-Webster"
-              height="70" width="70" style="padding: 5px"></a>
+          <a [href]="getMerriamWebsterLink()" target="_blank"><img
+            alt="Merriam-Webster"
+            height="70"
+            src="../../assets/img/services/merriam-webster.svg" style="padding: 5px" width="70"></a>
 
-            <a target="_blank" [href]="getCollinsLink()"><img src="../../assets/img/services/collins.svg"
-                                                              alt="Collins"
-                                                              height="60" width="60" class="small-icon"></a>
+          <a [href]="getCollinsLink()" target="_blank"><img alt="Collins"
+                                                            class="small-icon"
+                                                            height="60" src="../../assets/img/services/collins.svg" width="60"></a>
 
-            <a target="_blank" [href]="getOxfordLink()"><img src="../../assets/img/services/oxford.svg"
-                                                             alt="Oxford"
-                                                             height="60" width="60" class="small-icon"></a>
+          <a [href]="getOxfordLink()" target="_blank"><img alt="Oxford"
+                                                           class="small-icon"
+                                                           height="60" src="../../assets/img/services/oxford.svg" width="60"></a>
 
-            <a target="_blank" [href]="getMacmillianLink()"><img src="../../assets/img/services/macmillian.svg"
-                                                                 alt="Macmillian"
-                                                                 height="60" width="60" class="small-icon"></a>
+          <a [href]="getMacmillianLink()" target="_blank"><img alt="Macmillian"
+                                                               class="small-icon"
+                                                               height="60" src="../../assets/img/services/macmillian.svg" width="60"></a>
 
-            <a target="_blank" [href]="getCambridgeLink()"><img src="../../assets/img/services/cambridge.svg"
-                                                                alt="Cambridge"
-                                                                height="60" width="60" class="small-icon"></a>
-          </div>
-
-        </div>
-      </mat-expansion-panel>
-    </div>
-
-    <ng-container *ngIf="this.parallelMode">
-      <div class="cards">
-        <div class="mlt-card">
-          <div class="original-card-header">
-            <div>
-              original
-            </div>
-            <mat-icon *ngIf="!ttsReceived" class="volumeIcon" (click)="getTTS()">volume_up</mat-icon>
-          </div>
-          <div class="content">
-            {{this.savedChunk}}
-          </div>
-          <div class="audio-ribbon">
-            <div #audioPlayer
-                 class="essential_audio ribbon"
-                 data-autoplay>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="mlt-card">
-          <div class="translated-card-header">
-            translated to
-            <select #langSelect (change)="translateTo(langSelect.value)">
-              <option
-                *ngFor="let lang of this.getFluentLanguages()"
-                [value]="lang">
-                {{ lang.toLowerCase() }}
-              </option>
-            </select>
-          </div>
-          <div class="content">
-            {{this.machineTranslationDto.text}}
-          </div>
-          <div class="img-div">
-            <img class="provider-img" src="../assets/img/services/google-colored.png" alt="translated by Google">
-          </div>
+          <a [href]="getCambridgeLink()" target="_blank"><img alt="Cambridge"
+                                                              class="small-icon"
+                                                              height="60" src="../../assets/img/services/cambridge.svg" width="60"></a>
         </div>
 
       </div>
-    </ng-container>
+    </mat-expansion-panel>
+  </div>
 
-    <button mat-icon-button class="audio-btn" (click)="getAudio()" *ngIf="!this.parallelMode">
-      <mat-icon class="icon-display">volume_up</mat-icon>
+  <ng-container *ngIf="this.parallelMode">
+    <div class="cards">
+      <div class="mlt-card">
+        <div class="original-card-header">
+          <div>
+            original
+          </div>
+          <mat-icon (click)="getTTS()" *ngIf="!ttsReceived" class="volumeIcon">volume_up</mat-icon>
+        </div>
+        <div class="content">
+          {{ this.savedChunk }}
+        </div>
+        <div class="audio-ribbon">
+          <div #audioPlayer
+               class="essential_audio ribbon"
+               data-autoplay>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="mlt-card">
+        <div class="translated-card-header">
+          translated to
+          <select #langSelect (change)="translateTo(langSelect.value)">
+            <option
+              *ngFor="let lang of this.getFluentLanguages()"
+              [value]="lang">
+              {{ lang.toLowerCase() }}
+            </option>
+          </select>
+        </div>
+        <div class="content">
+          {{ this.machineTranslationDto.text }}
+        </div>
+        <div class="img-div">
+          <img alt="translated by Google" class="provider-img" src="../assets/img/services/google-colored.png">
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <button (click)="getAudio()" *ngIf="!this.parallelMode" class="audio-btn" mat-icon-button>
+    <mat-icon class="icon-display">volume_up</mat-icon>
+  </button>
+
+  {{ this.cardSearchLabel }}
+  <ng-container *ngIf="!!this.report">
+    REPORT
+    Frequency: <span class="frequency-box">{{ this.report.frequency | number:'1.1-1' }}</span>
+    CEFR: {{ this.report.cefr }}
+    Lemmas: {{ this.report.lemmas }}
+    POS-tags: {{ this.report.posTags }}
+  </ng-container>
+  <div *ngFor="let card of this.foundCards">
+    <button (click)="openDialogLocal(card, 'edit')" mat-raised-button>
+      {{ card.entry }}
     </button>
 
-    {{this.cardSearchLabel}}
-    <ng-container *ngIf="!!this.report">
-      REPORT
-      Frequency: <span class="frequency-box">{{this.report.frequency | number:'1.1-1'}}</span>
-      CEFR: {{this.report.cefr}}
-      Lemmas: {{this.report.lemmas}}
-      POS-tags: {{this.report.posTags}}
-    </ng-container>
-    <div *ngFor="let card of this.foundCards">
-      <button mat-raised-button (click)="openDialogLocal(card, 'edit')">
-        {{card.entry}}
-      </button>
-
-    </div>
-    <div *ngFor="let entry of fdEntries">
-      {{entry.phonetic}}
-      <div *ngFor="let meaning of entry.meanings">
-        {{meaning.partOfSpeech}}
-        <div *ngFor="let definition of meaning.definitions">
-          {{definition.definition}}
-        </div>
+  </div>
+  <div *ngFor="let entry of fdEntries">
+    {{ entry.phonetic }}
+    <div *ngFor="let meaning of entry.meanings">
+      {{ meaning.partOfSpeech }}
+      <div *ngFor="let definition of meaning.definitions">
+        {{ definition.definition }}
       </div>
     </div>
+  </div>
 
-    <div *ngIf="parallelMode">
-      <!--    <div *ngFor="let card of translationCards ? [].concat(translationCards) : []">-->
-      <!--      {{card.provider}}-->
-      <!--      <div *ngFor="let definition of card.definitions">-->
-      <!--        {{definition.pos}}-->
-      <!--        {{definition.transcription}}-->
-      <!--        <div *ngFor="let translation of definition.translations">-->
-      <!--          {{translation.frequency}}-->
-      <!--          {{translation.pos}}-->
-      <!--          {{translation.text}}-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <!--    </div>-->
-    </div>
+  <div *ngIf="parallelMode">
+    <!--    <div *ngFor="let card of translationCards ? [].concat(translationCards) : []">-->
+    <!--      {{card.provider}}-->
+    <!--      <div *ngFor="let definition of card.definitions">-->
+    <!--        {{definition.pos}}-->
+    <!--        {{definition.transcription}}-->
+    <!--        <div *ngFor="let translation of definition.translations">-->
+    <!--          {{translation.frequency}}-->
+    <!--          {{translation.pos}}-->
+    <!--          {{translation.text}}-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+  </div>
 </ng-container>
 <router-outlet></router-outlet>

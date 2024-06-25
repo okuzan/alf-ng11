@@ -27,6 +27,48 @@ import {DataService} from '../_services/data.service';
 export class CardComponent implements OnInit {
 
 
+  @Input() card: CardDto;
+  @Input() mode: String;
+  formIntact = true;
+  learningTypeLabel: string;
+  spellingTypeLabel: string;
+  friendLabel: string;
+  pluralTypeLabel: string;
+  filteredOptions: Observable<string[]>;
+  friends: Friend[];
+  friendList: string[];
+  searchText: string;
+  tagMap: Map<number, string>;
+  oldValue: string;
+  sender: string;
+  shareWithFriend = false;
+  friendSelected: boolean;
+  formControl = new FormControl();
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  filteredTags: Observable<string[]>;
+  tags: Set<String> = new Set();
+  allTags: string[] = ['Books', 'Netflix', 'Magazines', 'News', 'Social media'];
+  @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
+  changes: {};
+  public cardFormGroup: FormGroup = new FormGroup({
+    entry: new FormControl('', Validators.required),
+    notes: new FormControl(''),
+    primaryTranslation: new FormControl(''),
+    tags: new FormControl(''),
+    priority: new FormControl(''),
+    activeLearning: new FormControl(''),
+    falseFriend: new FormControl(''),
+    irregularPlural: new FormControl(''),
+    irregularSpelling: new FormControl(''),
+    translations: new FormArray([
+      this.translationFGRequired
+    ]),
+    examples: new FormArray([
+      this.exampleFG
+    ]),
+  });
+  private _formIntactChecker: FormIntactChecker;
+
   constructor(
     private tokenStorageService: TokenStorageService,
     private cardService: CardService,
@@ -122,49 +164,6 @@ export class CardComponent implements OnInit {
     });
   }
 
-  @Input() card: CardDto;
-  @Input() mode: String;
-  formIntact = true;
-  learningTypeLabel: string;
-  spellingTypeLabel: string;
-  friendLabel: string;
-  pluralTypeLabel: string;
-  filteredOptions: Observable<string[]>;
-  friends: Friend[];
-  friendList: string[];
-  searchText: string;
-  tagMap: Map<number, string>;
-  oldValue: string;
-  sender: string;
-  shareWithFriend = false;
-  friendSelected: boolean;
-  formControl = new FormControl();
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  filteredTags: Observable<string[]>;
-  tags: Set<String> = new Set();
-  allTags: string[] = ['Books', 'Netflix', 'Magazines', 'News', 'Social media'];
-  @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
-  changes: {};
-
-  public cardFormGroup: FormGroup = new FormGroup({
-    entry: new FormControl('', Validators.required),
-    notes: new FormControl(''),
-    primaryTranslation: new FormControl(''),
-    tags: new FormControl(''),
-    priority: new FormControl(''),
-    activeLearning: new FormControl(''),
-    falseFriend: new FormControl(''),
-    irregularPlural: new FormControl(''),
-    irregularSpelling: new FormControl(''),
-    translations: new FormArray([
-      this.translationFGRequired
-    ]),
-    examples: new FormArray([
-      this.exampleFG
-    ]),
-  });
-  private _formIntactChecker: FormIntactChecker;
-
   static validateExampleGroup(): ValidatorFn {
     return (c: AbstractControl) => {
       const example = c.get('example').value;
@@ -187,7 +186,6 @@ export class CardComponent implements OnInit {
     }
 
     event.input.value = '';
-    // this.cardFormGroup.controls.tags.setValue(null);
   }
 
   remove(tag: string): void {
@@ -198,14 +196,7 @@ export class CardComponent implements OnInit {
   selected(event: MatAutocompleteSelectedEvent): void {
     this.tags.add(event.option.viewValue);
     this.tagInput.nativeElement.value = '';
-    // this.cardFormGroup.controls.tags.setValue(null);
   }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toString().toLowerCase();
-    return this.allTags.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  }
-
 
   ngOnInit(): void {
     console.log(this.mode);
@@ -285,11 +276,6 @@ export class CardComponent implements OnInit {
         console.log(this.changes);
       }
     );
-
-    // this.cardFormGroup.disable()
-    // for (var control in this.cardFormGroup.controls) {
-    //   this.cardFormGroup.controls[control].re();
-    // }
 
     if (this.mode === 'create') {
       this.cardFormGroup.patchValue({
@@ -376,12 +362,6 @@ export class CardComponent implements OnInit {
 
   }
 
-
-  private filterValues(value: string): string[] {
-    const filterValue = value.toLowerCase().split(' ').pop();
-    return this.friendList.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-  }
-
   deleteCard(): void {
     this.cardService.deleteCard(this.card.id).subscribe(
       data => {
@@ -392,17 +372,6 @@ export class CardComponent implements OnInit {
         this.dataService.showToast(err.error.message);
       }
     );
-  }
-
-  replacer(key, value) {
-    if (value instanceof Map) {
-      return {
-        dataType: 'Map',
-        value: Array.from(value.entries()), // or with spread: value: [...value]
-      };
-    } else {
-      return value;
-    }
   }
 
   updateCard(): void {
@@ -456,7 +425,6 @@ export class CardComponent implements OnInit {
       data => {
         console.log('SUCCESS');
         this.dataService.showToast('Card successfully created');
-        // this.cardDialog.close();
         this.dialog.closeAll();
       },
       err => {
@@ -556,7 +524,6 @@ export class CardComponent implements OnInit {
     this.dataService.showToast('Card has been sent to your friend');
   }
 
-
   showToast(msg: string): void {
     this._snackBar.open(msg, '', {
       duration: 1500,
@@ -626,9 +593,7 @@ export class CardComponent implements OnInit {
   }
 
   openDeletionDialog(): void {
-    let dialogRef = this.dialog.open(CardDeletionConfirmationDialog, {
-//       width: '250px',
-    });
+    let dialogRef = this.dialog.open(CardDeletionConfirmationDialog, {});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteCard();
@@ -656,6 +621,16 @@ export class CardComponent implements OnInit {
 
   login() {
     window.location.href = '/login';
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toString().toLowerCase();
+    return this.allTags.filter(fruit => fruit.toLowerCase().includes(filterValue));
+  }
+
+  private filterValues(value: string): string[] {
+    const filterValue = value.toLowerCase().split(' ').pop();
+    return this.friendList.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }
 
